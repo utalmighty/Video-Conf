@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_socketio import SocketIO, emit, send
+import os
 #import json5 as json
 #import psycopg2 as postgres
 
@@ -8,7 +9,7 @@ connections = []
 
 con = Flask(__name__)
 
-con.secretKey = 'HelloWorld.secretkey'
+con.secretKey = os.environ.get('Secret_Key')
 socket = SocketIO(con)
 
 @con.route('/')
