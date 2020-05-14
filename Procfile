@@ -1,1 +1,1 @@
-web: gunicorn -k eventlet utkarsh:con
+gunicorn -k eventlet utkarsh:con
