@@ -1,1 +1,1 @@
-web: gunicorn -k eventlet utkarsh:con
+web: gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 utkarsh:con
