@@ -7,7 +7,7 @@ database = []
 connections = []
 
 con = Flask(__name__)
-con.debug = True
+
 con.secretKey = 'HelloWorld.secretkey'
 socket = SocketIO(con)
 
@@ -41,4 +41,4 @@ def video(image):# image contain whom to send and image data
 
 if __name__ == '__main__':
     #con.run()
-    socket.run(con)
+    con.run()
