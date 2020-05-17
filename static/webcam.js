@@ -1,27 +1,27 @@
 constraints = {
-    audio: {echoCancellation: true},
+    //audio: {echoCancellation: true},
     video: {
         width:{
-            min: 100,
-            ideal: 100,
-            max: 100
+            min: 320,
+            ideal: 640,
+            max: 1280
         },
         height:{
-            min: 56.25,
-            ideal: 56.25,
-            max: 56.25
+            min: 240,
+            ideal: 480,
+            max: 720
         },
-        frameRate:{ideal:10, max:15}
+        frameRate:{min: 2, ideal:10, max:15}
     }
 };
 
 whom='';
 quality=4; // lower is better
-socket=io.connect({secure:true});//default domain
+socket=io.connect();//default domain
 privatedomain = location.protocol+'//'+document.domain+':'+location.port+'/private';
 videodomain = location.protocol+'//'+document.domain+':'+location.port+'/video';
-socket_private = io(privatedomain, {secure:true});
-socket_video = io(videodomain, {secure:true});
+socket_private = io(privatedomain);
+socket_video = io(videodomain);
 getConnectedDevices('videoinput', cameras => console.log('Cameras found', cameras));
 webcam();
 
@@ -70,18 +70,22 @@ function drawincanvas(stream){
     const video = document.getElementById('webcam');
     video.srcObject = stream;
     const canvas = document.getElementById('canvasid');
+    canvasWidth = canvas.width;
+    canvasHeight = canvas.height;
     context = canvas.getContext('2d');
     (function loop(){
-        context.drawImage(video, 0, 0,100, 56.25);
+        context.drawImage(video, 0, 0, canvasWidth, canvasHeight);
         socket_video.emit('videofromjs' , {'to': whom, 'img':canvas.toDataURL('image/jpeg',quality)});
         // gone to another line.
-        setTimeout(loop, 1000/1);
+        setTimeout(loop, 1000/10);
     })();
 }
 const othercan = document.getElementById('otherperson');
 socket_video.on('videofromflask', function(imgg){
     const ima = document.getElementById('image');
     ima.src = imgg;
+    oh = ima.height;
+    ow = ima.width;
     var ctx2 = othercan.getContext('2d');
-    ctx2.drawImage(ima,0,0);
+    ctx2.drawImage(ima,0,0,ow, oh);
 });
