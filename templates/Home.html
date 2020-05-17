@@ -4,29 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>Vaibhav Pandey</title>
 </head>
-<body>
-    <a>Hello World.</a>
+<body style="text-align: center;">
+    <a>Hello World. This is Video Conferencing app.</a>
     <div id= 'video_container'>
         <video id = 'webcam' autoplay playinline style="display: none;"></video>
     </div>
-    <canvas id="canvasid" width='100' height="56.25"></canvas>
+    <canvas id="canvasid" width='device-width' height="device-height"></canvas>
 
     <div id="other"><a>Other Person</a>
+        <br>
         <img id='image'></img>    
     </div>
     <a>CREATE MEETING</a>
     <input id='usernameid' placeholder="Username" type="text"></input>
     <input id='passwordid' placeholder="Password" type="password"></input>
-    <button id='buttonid' onclick="sendcred()">Ok GOOGLE</button>
+    <button id='buttonid' onclick="sendcred()">Create</button>
     <script src = 'static/webcam.js'></script>
-    <div id= 'credentials'> </div>
+    <br>
+    <br>
+    <br>
     <a>JOIN MEETING</a>
     <input id='joinusernameid' placeholder="Meeting-Username" type="text"></input>
     <input id='joinpasswordid' placeholder="Meeting-Password" type="password"></input>
-    <button id='buttonid' onclick="sendjoin()">Ok GOOGLE</button>
-    
-    
+    <button id='buttonid' onclick="sendjoin()">Connect</button>
 </body>
 </html>
