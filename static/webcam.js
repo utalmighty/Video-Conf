@@ -17,12 +17,15 @@ constraints = {
 
 whom='';
 quality=4; // lower is better
+fpstosend = 10;
 socket=io.connect();//default domain
 privatedomain = location.protocol+'//'+document.domain+':'+location.port+'/private';
 videodomain = location.protocol+'//'+document.domain+':'+location.port+'/video';
+flashdomain = location.protocol+'//'+document.domain+':'+location.port+'/flash';
 socket_private = io(privatedomain);
 socket_video = io(videodomain);
-getConnectedDevices('videoinput', cameras => console.log('Cameras found', cameras));
+socket_flash = io(flashdomain);
+getConnectedDevices('videoinput', cameras => console.log('Cameras found', cameras)); //Promise
 webcam();
 
 
@@ -35,7 +38,9 @@ function getConnectedDevices(type, callback) { /// to check for media Devices
         });
 }
 
-
+socket_flash.on('flashing', function(mess){
+    setTimeout(alert(mess['message']), 3000);
+})
 
 function webcam(){
     if(navigator.mediaDevices.getUserMedia){ // checks up for supported browser
@@ -75,10 +80,13 @@ function drawincanvas(stream){
     context = canvas.getContext('2d');
     (function loop(){
         context.drawImage(video, 0, 0, canvasWidth, canvasHeight);
+        if (whom != ''){
         socket_video.emit('videofromjs' , {'to': whom, 'img':canvas.toDataURL('image/jpeg',quality)});
         // gone to another line.
-        setTimeout(loop, 1000/10);
+        }
+        setTimeout(loop, 1000/fpstosend);
     })();
+
 }
 const othercan = document.getElementById('otherperson');
 socket_video.on('videofromflask', function(imgg){
