@@ -68,5 +68,5 @@ def removeuser():
             break
 
 if __name__ == '__main__':
-    socket.run(con)
-    #con.run()
+    #socket.run(con) # for locally
+    con.run() # for heroku
